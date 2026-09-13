@@ -229,6 +229,32 @@ blockquote cite{display:block;font-family:var(--mono);font-style:normal;font-siz
 .canal b{display:block;font-weight:600;font-size:15px}
 .canal span{display:block;font-size:13.5px;color:var(--muted)}
 
+/* artigo */
+.voltar{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);text-decoration:none;margin-bottom:28px}
+.voltar:hover{text-decoration:underline;text-underline-offset:4px}
+.art__head{display:flex;flex-direction:column;gap:18px;max-width:24em;margin-bottom:40px}
+.art__head h1{font-size:clamp(1.9rem,4.4vw,3rem)}
+.art__meta{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:var(--mono);font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:6px;border-top:1px solid var(--line)}
+.art{max-width:34em;display:flex;flex-direction:column;gap:22px;font-size:17.5px;line-height:1.72}
+.art p{color:var(--muted)}
+.art strong{color:var(--ink);font-weight:600}
+.art__lede{font-size:clamp(1.1rem,2.2vw,1.3rem);line-height:1.6;color:var(--ink)!important}
+.art h2{font-size:clamp(1.3rem,2.6vw,1.7rem);margin-top:26px;padding-top:24px;border-top:1px solid var(--line);color:var(--ink)}
+.art ul,.art ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:12px;color:var(--muted)}
+.art li{padding-left:4px}
+.art li::marker{color:var(--gold)}
+.art__box{border-left:3px solid var(--gold-mid);background:var(--surface);padding:16px 20px;font-size:16px;color:var(--ink)!important}
+.art__nota{margin-top:20px;border-top:1px solid var(--line);padding-top:18px;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px;line-height:1.6}
+.art__nota b{color:var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:400}
+.art__cta{margin-top:48px;background:var(--band);color:var(--band-ink);padding:clamp(26px,4vw,40px);
+  display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+.art__cta > div{display:flex;flex-direction:column;gap:10px;max-width:52ch}
+.art__cta h3{color:var(--band-ink);font-size:1.5rem}
+.art__cta p{color:var(--band-muted);font-size:15.5px}
+.art__cta .eyebrow{color:var(--gold-bright)}
+
 /* nota */
 .nota{border-left:3px solid var(--gold-mid);background:var(--surface);padding:16px 20px;font-size:14.5px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
 .nota b{color:var(--ink);font-weight:600}
@@ -968,15 +994,123 @@ blockquote cite{display:block;font-family:var(--mono);font-style:normal;font-siz
         <div>
           <p class="eyebrow">Artigos</p>
           <h2>Análises jurídicas escritas a partir da prática.</h2>
-          <p class="lede">Textos sobre tributos, benefícios, contratos bancários e administração pública. Novos artigos entram aqui à medida que forem publicados.</p>
+          <p class="lede">Textos sobre tributos, benefícios, contratos bancários e administração pública, escritos a partir do que aparece na prática.</p>
         </div>
         <a class="btn" href="#contato">Receber os próximos artigos</a>
       </div>
       <div class="noticias">
+        <a class="noticia" href="#artigo-aposentadoria"><span class="noticia__data">13/09/2026</span><div><h4>Aposentadoria do servidor público: seis direitos que costumam ficar de fora do processo</h4><p style="margin-top:6px;font-size:15px;color:var(--muted)">Regra aplicável, tempo não computado, média mal calculada, integralidade e paridade, contribuição indevida e abono de permanência — o que conferir antes de assinar.</p></div><span class="noticia__fonte">Previdenciário</span></a>
         <a class="noticia" href="#contato"><span class="noticia__data">Em breve</span><h4>Consignado que você não contratou: como o banco responde e o que o cliente precisa guardar desde o primeiro dia</h4><span class="noticia__fonte">Consumidor</span></a>
-        <a class="noticia" href="#contato"><span class="noticia__data">Em breve</span><h4>Planejamento previdenciário depois da EC nº 103/2019: as regras de transição que ainda valem a pena para o servidor</h4><span class="noticia__fonte">Previdenciário</span></a>
         <a class="noticia" href="#contato"><span class="noticia__data">Em breve</span><h4>Tributos pagos a mais na folha: o que a empresa pode recuperar nos últimos cinco anos</h4><span class="noticia__fonte">Tributário</span></a>
         <a class="noticia" href="#contato"><span class="noticia__data">Em breve</span><h4>Responsabilidade do gestor público por decisão de investimento: até onde vai o dever de diligência de quem assina a ata</h4><span class="noticia__fonte">Administrativo</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== ARTIGO 1 ============================== -->
+<section class="page" id="page-artigo-aposentadoria">
+  <div class="section">
+    <div class="wrap">
+      <a class="voltar" href="#publicacoes">← Publicações</a>
+
+      <div class="art__head">
+        <p class="eyebrow">Artigo · Direito Previdenciário</p>
+        <h1>Aposentadoria do servidor público: seis direitos que costumam ficar de fora do processo</h1>
+        <p class="art__meta">
+          <span>Flávio Rodrigues de Castro</span>
+          <span>13 de setembro de 2026</span>
+          <span>8 min de leitura</span>
+        </p>
+      </div>
+
+      <article class="art">
+        <p class="art__lede">Existe uma confiança silenciosa no processo de aposentadoria do servidor: o pedido é protocolado, o setor de pessoal monta os autos, o instituto calcula, o servidor assina. Quando o benefício sai menor do que o esperado, a reação mais comum é aceitar — afinal, quem fez a conta foi a própria administração.</p>
+
+        <p>Só que o processo de aposentadoria é instruído por quem tem volume e prazo, não por quem tem interesse no resultado. E, depois que o ato é concedido e registrado pelo Tribunal de Contas, corrigir passa a ser mais lento e mais difícil.</p>
+
+        <p>Os seis pontos abaixo são aqueles em que mais vejo direito ficar para trás. Nenhum deles é exótico, e quase nunca há má-fé: são erros de instrução, que se repetem porque ninguém confere do lado de fora.</p>
+
+        <h2>1. A regra aplicada pode não ser a regra do seu caso</h2>
+
+        <p>A Emenda Constitucional nº 103/2019 reorganizou a previdência do servidor, mas <strong>não se aplicou automaticamente a Estados e Municípios</strong>. Cada ente precisou aprovar a própria reforma, em datas diferentes — e alguns ainda não aprovaram. Por isso dois servidores de municípios vizinhos, com a mesma idade e o mesmo tempo de contribuição, podem se aposentar por regras distintas e com valores distintos.</p>
+
+        <p>Daí decorre um ponto que costuma passar batido: <strong>quem já havia completado todos os requisitos antes da mudança tem direito adquirido à regra anterior</strong>, ainda que só vá se aposentar anos depois. É o que assegura o art. 3º da EC nº 103/2019. O direito nasce no dia em que os requisitos se completam, não no dia em que o requerimento é protocolado.</p>
+
+        <p class="art__box">Vale conferir duas coisas: qual lei local está sendo aplicada ao seu ato, e em que data você reuniu os requisitos de cada regra que poderia lhe servir.</p>
+
+        <h2>2. Tempo que existe, mas não entrou na conta</h2>
+
+        <p>O tempo de contribuição é a variável que mais muda o resultado, e é justamente a que depende de documentos que o servidor precisa buscar. Alguns períodos costumam ficar de fora:</p>
+
+        <ul>
+          <li><strong>Tempo no setor privado ou em outro ente.</strong> Depende da Certidão de Tempo de Contribuição (CTC) emitida pelo INSS ou pelo regime de origem. Sem a certidão, o período simplesmente não existe para o processo — e é comum o servidor não saber que precisa pedi-la.</li>
+          <li><strong>Tempo trabalhado em condições especiais.</strong> Até a EC nº 103/2019, o servidor exposto a agentes nocivos à saúde tem direito à contagem diferenciada desse período, conforme decidiu o Supremo Tribunal Federal no Tema 942, e à aposentadoria especial nos termos da Súmula Vinculante 33. Atinge, na prática, muita gente da saúde, da limpeza urbana e da segurança — e raramente é reconhecido de ofício.</li>
+          <li><strong>Licença-prêmio não gozada e não indenizada.</strong> Onde o estatuto local prevê a contagem em dobro, ela precisa ser requerida e comprovada.</li>
+          <li><strong>Tempo de aluno-aprendiz</strong> em escola técnica, nos termos da Súmula nº 96 do Tribunal de Contas da União, e <strong>tempo de serviço militar obrigatório</strong>.</li>
+        </ul>
+
+        <h2>3. A média que virou os seus proventos</h2>
+
+        <p>Nas regras posteriores à reforma, o valor do benefício parte da <strong>média aritmética simples de 100% dos salários de contribuição desde julho de 1994</strong> (art. 26 da EC nº 103/2019), à qual se aplica um percentual que cresce com o tempo de contribuição.</p>
+
+        <p>Como a média usa todo o histórico, cada competência importa. Três falhas se repetem:</p>
+
+        <ul>
+          <li>competências que não foram carregadas no cálculo, sobretudo de vínculos antigos ou de outro regime;</li>
+          <li>parcelas sobre as quais <em>houve</em> desconto previdenciário e que, mesmo assim, não entraram na média;</li>
+          <li>períodos de afastamento com contribuição recolhida tratados como lacuna.</li>
+        </ul>
+
+        <p>Um mês faltando parece pouco. Mas ele não some de um mês de salário: ele puxa o valor do benefício para baixo pelo resto da vida, e da pensão depois disso.</p>
+
+        <h2>4. Integralidade e paridade de quem ainda tem direito a elas</h2>
+
+        <p>Nem todo servidor entrou na lógica da média. Quem ingressou no serviço público até as datas fixadas pelo art. 6º da EC nº 41/2003 ou pelo art. 3º da EC nº 47/2005, e cumpre os requisitos dessas regras — entre eles 25 anos de serviço público, 15 anos de carreira e 5 anos no cargo —, pode se aposentar com <strong>a remuneração integral do cargo efetivo</strong> e com <strong>paridade</strong>: reajuste na mesma data e no mesmo índice concedido aos servidores em atividade.</p>
+
+        <p>São dois erros distintos, e ambos aparecem com frequência. O primeiro é aplicar a média a quem tinha direito à integralidade. O segundo é mais discreto e se arrasta por anos: o aposentado com paridade deixa de receber os reajustes concedidos à ativa, e ninguém avisa. Cada revisão da tabela de vencimentos que não se reflete no seu contracheque é diferença acumulando.</p>
+
+        <h2>5. Contribuição descontada sobre verbas que nunca entrariam nos proventos</h2>
+
+        <p>O Supremo Tribunal Federal firmou, no Tema 163, que <strong>não incide contribuição previdenciária sobre verbas que não se incorporam aos proventos</strong> — entre elas o terço constitucional de férias, as horas extras, o adicional noturno e o adicional de insalubridade.</p>
+
+        <p>Ainda assim, muitos entes seguiram descontando. Se foi o seu caso, cabe restituição dos valores recolhidos nos últimos cinco anos. É um direito que independe de você já estar aposentado.</p>
+
+        <h2>6. Abono de permanência não pago, ou pago a partir da data errada</h2>
+
+        <p>O servidor que já reuniu os requisitos para se aposentar e opta por continuar trabalhando tem direito ao abono de permanência, que devolve o valor da contribuição previdenciária. Depois da EC nº 103/2019, a previsão depende da legislação de cada ente — mas, onde existe, o problema raramente é a negativa: é a <strong>data do início do pagamento</strong>.</p>
+
+        <p>É comum o abono começar a ser pago da data do requerimento, quando o direito nasceu no dia em que os requisitos se completaram. O período entre uma data e outra costuma ser de meses, às vezes de anos.</p>
+
+        <h2>O que fazer antes de assinar</h2>
+
+        <p>A revisão vale muito mais antes da concessão do que depois dela. Um roteiro simples:</p>
+
+        <ol>
+          <li><strong>Peça cópia integral do processo administrativo</strong>, não apenas a planilha final. Você tem direito a ela.</li>
+          <li><strong>Confira a memória de cálculo</strong> competência por competência, especialmente os anos mais antigos.</li>
+          <li><strong>Levante todo o tempo antes de protocolar</strong>: CTC do INSS, períodos especiais, licença-prêmio, serviço militar, aluno-aprendiz.</li>
+          <li><strong>Verifique as datas</strong> em que você completou os requisitos de cada regra possível — inclusive das que já foram revogadas.</li>
+          <li><strong>Não assine termo de opção ou de concordância</strong> sem entender qual regra ele está escolhendo por você.</li>
+        </ol>
+
+        <p>Se o ato já foi concedido, ainda há caminho. Enquanto não houver registro pelo Tribunal de Contas, a correção administrativa é mais simples. Depois do registro, a revisão continua possível — e as diferenças, em regra, retroagem aos últimos cinco anos.</p>
+
+        <p>O ponto não é desconfiar do instituto de previdência. É entender que ninguém, além do próprio servidor, tem o dever de conferir se o seu processo está completo. E que esse é o último momento da vida funcional em que conferir ainda muda alguma coisa.</p>
+
+        <div class="art__nota">
+          <b>Sobre este texto</b>
+          <span>Conteúdo informativo, de caráter geral. Regras de aposentadoria variam conforme o ente federativo, a data de ingresso no serviço público e a legislação local vigente — nenhuma conclusão aqui substitui a análise do caso concreto.</span>
+        </div>
+      </article>
+
+      <div class="art__cta">
+        <div>
+          <p class="eyebrow">Revisão de processo de aposentadoria</p>
+          <h3>Quer que eu confira o seu processo antes de você assinar?</h3>
+          <p>Análise do processo administrativo, do tempo levantado e do cálculo — para servidores do Amazonas, presencialmente ou a distância.</p>
+        </div>
+        <a class="btn btn--solid" href="#contato">Falar comigo</a>
       </div>
     </div>
   </div>
@@ -1120,10 +1254,10 @@ blockquote cite{display:block;font-family:var(--mono);font-style:normal;font-siz
 <script>
 (function(){
   var WA = "5592994424181";
-  var pages = ['inicio','sobre','atuacao','trajetoria','publicacoes','contato'];
+  var pages = ['inicio','sobre','atuacao','trajetoria','publicacoes','contato','artigo-aposentadoria'];
   var nav = document.getElementById('nav');
   var burger = document.getElementById('burger');
-  var titles = {inicio:'Flávio Rodrigues de Castro', sobre:'O advogado — Flávio Rodrigues de Castro', atuacao:'Áreas de atuação — Flávio Rodrigues de Castro', trajetoria:'Trajetória — Flávio Rodrigues de Castro', publicacoes:'Publicações — Flávio Rodrigues de Castro', contato:'Contato — Flávio Rodrigues de Castro'};
+  var titles = {inicio:'Flávio Rodrigues de Castro', sobre:'O advogado — Flávio Rodrigues de Castro', atuacao:'Áreas de atuação — Flávio Rodrigues de Castro', trajetoria:'Trajetória — Flávio Rodrigues de Castro', publicacoes:'Publicações — Flávio Rodrigues de Castro', contato:'Contato — Flávio Rodrigues de Castro', 'artigo-aposentadoria':'Aposentadoria do servidor: seis direitos que costumam ficar de fora — Flávio Rodrigues de Castro'};
 
   function show(id, scroll){
     if (pages.indexOf(id) < 0) id = 'inicio';
