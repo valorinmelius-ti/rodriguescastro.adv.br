@@ -229,6 +229,12 @@ blockquote cite{display:block;font-family:var(--mono);font-style:normal;font-siz
 .canal b{display:block;font-weight:600;font-size:15px}
 .canal span{display:block;font-size:13.5px;color:var(--muted)}
 
+/* status do formulário */
+.form__status{font-size:14.5px;line-height:1.5;padding:12px 14px;border-left:3px solid var(--gold-mid);background:var(--surface)}
+.form__status[hidden]{display:none}
+.form__status--ok{border-left-color:#1E9E5A;color:var(--ink)}
+.form__status--erro{border-left-color:#C0392B;color:var(--ink)}
+
 /* artigo */
 .voltar{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--gold);text-decoration:none;margin-bottom:28px}
@@ -1154,6 +1160,8 @@ blockquote cite{display:block;font-family:var(--mono);font-style:normal;font-siz
         <div>
           <form class="form" id="form-contato">
             <div class="field"><label for="nome">Seu nome</label><input type="text" id="nome" name="nome" required></div>
+            <div class="field"><label for="email">Seu e-mail</label><input type="email" id="email" name="email" required autocomplete="email"></div>
+            <div class="field"><label for="fone">Telefone ou WhatsApp</label><input type="tel" id="fone" name="fone" autocomplete="tel" placeholder="(92) 90000-0000"></div>
             <div class="field"><label for="org">Empresa ou órgão (se houver)</label><input type="text" id="org" name="org"></div>
             <div class="field"><label for="assunto">Assunto</label>
               <select id="assunto" name="assunto">
@@ -1168,10 +1176,11 @@ blockquote cite{display:block;font-family:var(--mono);font-style:normal;font-siz
             </div>
             <div class="field"><label for="mensagem">Conte o seu caso</label><textarea id="mensagem" name="mensagem" required></textarea></div>
             <div class="actions">
-              <button class="btn btn--solid" type="submit">Enviar pelo WhatsApp</button>
-              <button class="btn" type="button" id="btn-email">Enviar por e-mail</button>
+              <button class="btn btn--solid" type="submit" id="btn-enviar">Enviar mensagem</button>
+              <button class="btn" type="button" id="btn-whats">Enviar pelo WhatsApp</button>
             </div>
-            <p style="font-size:13.5px;color:var(--muted)">Os botões abrem o WhatsApp ou o seu aplicativo de e-mail com a mensagem já preenchida.</p>
+            <p class="form__status" id="form-status" role="status" aria-live="polite" hidden></p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.5">Ao enviar, a mensagem chega diretamente ao escritório por e-mail. Seus dados são usados apenas para responder ao contato e não são compartilhados com terceiros.</p>
           </form>
         </div>
       </div>
@@ -1283,23 +1292,78 @@ blockquote cite{display:block;font-family:var(--mono);font-style:normal;font-siz
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
 
-  function mensagem(){
-    var nome = document.getElementById('nome').value.trim();
-    var org = document.getElementById('org').value.trim();
-    var assunto = document.getElementById('assunto').value;
-    var msg = document.getElementById('mensagem').value.trim();
-    return {nome:nome, assunto:assunto, corpo:'Nome: ' + nome + '\n' + (org ? 'Empresa/órgão: ' + org + '\n' : '') + 'Assunto: ' + assunto + '\n\n' + msg + '\n'};
+  // ---------------- formulário de contato ----------------
+  var ENDPOINT = 'https://formsubmit.co/ajax/rodrigues.mp@outlook.com';
+  var DESTINO  = 'rodrigues.mp@outlook.com';
+
+  var form   = document.getElementById('form-contato');
+  var status = document.getElementById('form-status');
+  var btnEnviar = document.getElementById('btn-enviar');
+
+  function campos(){
+    return {
+      nome:  document.getElementById('nome').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      fone:  document.getElementById('fone').value.trim(),
+      org:   document.getElementById('org').value.trim(),
+      assunto: document.getElementById('assunto').value,
+      msg:   document.getElementById('mensagem').value.trim()
+    };
   }
-  var form = document.getElementById('form-contato');
+  function corpo(c){
+    return 'Nome: ' + c.nome + '\n'
+         + 'E-mail: ' + c.email + '\n'
+         + (c.fone ? 'Telefone: ' + c.fone + '\n' : '')
+         + (c.org  ? 'Empresa/órgão: ' + c.org + '\n' : '')
+         + 'Assunto: ' + c.assunto + '\n\n'
+         + c.msg + '\n';
+  }
+  function aviso(texto, tipo){
+    status.textContent = texto;
+    status.className = 'form__status' + (tipo ? ' form__status--' + tipo : '');
+    status.hidden = false;
+  }
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    var m = mensagem();
-    window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent('Olá, Flávio. Vim pelo site.\n' + m.corpo), '_blank', 'noopener');
+    var c = campos();
+    btnEnviar.disabled = true;
+    aviso('Enviando...', '');
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({
+        _subject: '[Site] ' + c.assunto + ' — ' + c.nome,
+        _template: 'table',
+        _captcha: 'false',
+        Nome: c.nome,
+        'E-mail': c.email,
+        Telefone: c.fone || '—',
+        'Empresa/órgão': c.org || '—',
+        Assunto: c.assunto,
+        Mensagem: c.msg
+      })
+    })
+    .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return {ok: r.ok, body: j}; }); })
+    .then(function(res){
+      if (res.ok) {
+        form.reset();
+        aviso('Mensagem enviada. Respondo assim que possível — normalmente em até um dia útil.', 'ok');
+      } else {
+        throw new Error('falha');
+      }
+    })
+    .catch(function(){
+      aviso('Não consegui enviar agora. Use o botão do WhatsApp acima, ou escreva para ' + DESTINO + '.', 'erro');
+    })
+    .then(function(){ btnEnviar.disabled = false; });
   });
-  document.getElementById('btn-email').addEventListener('click', function(){
+
+  document.getElementById('btn-whats').addEventListener('click', function(){
     if (!form.reportValidity()) return;
-    var m = mensagem();
-    window.location.href = 'mailto:rodrigues.mp@outlook.com?subject=' + encodeURIComponent('[Site] ' + m.assunto + ' — ' + m.nome) + '&body=' + encodeURIComponent(m.corpo);
+    var c = campos();
+    window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent('Olá, Flávio. Vim pelo site.\n\n' + corpo(c)), '_blank', 'noopener');
   });
 
   // ---------------- atendimento guiado -> WhatsApp ----------------
