@@ -849,15 +849,26 @@ function parseCode(text) {
 }
 
 /* ---------- Estado ---------- */
-var KEY = "perfil-investidor-fr-v2";
+/* As respostas ficam só na aba em que a pessoa está respondendo (sessionStorage) e
+   expiram depois de 1 hora sem uso. Quem abrir o questionário depois encontra tudo em branco. */
+var KEY = "perfil-investidor-fr-v3";
+var MAX_IDLE = 60 * 60 * 1000;
 function blank() { return { name: "", answers: new Array(20).fill(0), step: 0, declared: false, finishedAt: null, reviewing: false, phone: "", sentAt: null }; }
 var state = blank();
+try { localStorage.removeItem("perfil-investidor-fr-v2"); } catch (e) { /* versão antiga guardava no aparelho */ }
 try {
-  var saved = JSON.parse(localStorage.getItem(KEY) || "null");
-  if (saved && Array.isArray(saved.answers) && saved.answers.length === 20) state = Object.assign(blank(), saved);
+  var saved = JSON.parse(sessionStorage.getItem(KEY) || "null");
+  if (saved && Array.isArray(saved.answers) && saved.answers.length === 20 && Date.now() - (+saved.savedAt || 0) < MAX_IDLE) state = Object.assign(blank(), saved);
+  else sessionStorage.removeItem(KEY);
 } catch (e) { /* armazenamento indisponível: segue sem salvar */ }
-function persist() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
-function wipe() { try { localStorage.removeItem(KEY); } catch (e) {} }
+function persist() { try { state.savedAt = Date.now(); sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+function wipe() { try { sessionStorage.removeItem(KEY); } catch (e) {} }
+function expireIfIdle() {
+  if (app.querySelector("#paste, #other")) return;
+  if (state.savedAt && Date.now() - state.savedAt > MAX_IDLE) { state = blank(); wipe(); renderIntro(); }
+}
+document.addEventListener("visibilitychange", function () { if (!document.hidden) expireIfIdle(); });
+window.addEventListener("pageshow", function (e) { if (e.persisted) expireIfIdle(); });
 
 /* ---------- Download ---------- */
 function saveFile(blob, filename) {
@@ -905,7 +916,7 @@ function renderIntro() {
   show(
     '<h1>Seu perfil de investidor</h1>' + resume +
     '<p>São 20 perguntas, a maioria sobre como você agiria em situações comuns com investimentos. Com as respostas, o Flávio vai indicar investimentos adequados a você.</p>' +
-    '<p class="small">Leva cerca de 8 minutos. Não há respostas certas ou erradas: escolha a que mais combina com você. Não é preciso informar documentos. No final, para enviar o resultado ao Flávio, você informa só o seu WhatsApp. As respostas ficam guardadas neste aparelho até você enviá-las.</p>' +
+    '<p class="small">Leva cerca de 8 minutos. Não há respostas certas ou erradas: escolha a que mais combina com você. Não é preciso informar documentos. No final, para enviar o resultado ao Flávio, você informa só o seu WhatsApp. Suas respostas não ficam gravadas: se você fechar a página, elas se apagam.</p>' +
     (started ? "" :
       '<label class="field" for="name">Seu nome</label>' +
       '<p class="small" style="margin:-.25rem 0 .625rem">Não precisa ser o nome completo.</p>' +
@@ -1196,7 +1207,7 @@ function renderResult() {
   };
 }
 function confirmAgain() {
-  try { return window.confirm("Apagar as respostas deste aparelho e começar de novo?"); } catch (e) { return true; }
+  try { return window.confirm("Apagar as respostas e começar de novo?"); } catch (e) { return true; }
 }
 
 function wireCopy() {
